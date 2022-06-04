@@ -40,7 +40,7 @@ const MyList = () => {
       <div className="explainbar">
         <div className="id">#</div>
         <div className="title">Title</div>
-        <button className="remove-all" onClick={handleLocalClear}>
+        <button className="clear-list" onClick={handleLocalClear}>
           Clear List
         </button>
       </div>

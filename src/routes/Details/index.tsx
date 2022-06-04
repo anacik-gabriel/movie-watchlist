@@ -81,7 +81,7 @@ const Details = () => {
           <div className="poster-container">
             <img alt="" src={movieDetails?.image} />
           </div>{" "}
-          <div className="pizda">
+          <div className="video-frame">
             <iframe
               title="trailer"
               width="100%"
