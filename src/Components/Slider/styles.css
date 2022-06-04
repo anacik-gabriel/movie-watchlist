@@ -1,0 +1,135 @@
+.divider {
+  height: 50px;
+  margin-top: 50px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ececec;
+}
+
+.title-containerr {
+  padding-right: 15px;
+}
+
+.line {
+  border-bottom: 1px solid #ececec;
+  flex: 1;
+}
+
+.buttons-container {
+  width: 100px;
+  height: 40px;
+  padding-left: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.buttonleft,
+.buttonright {
+  cursor: pointer;
+  padding-bottom: 6px;
+  border: none;
+  transition: 0.4s ease;
+  background: none;
+}
+
+.buttonleft:hover,
+.buttonright:hover {
+  cursor: pointer;
+  padding-bottom: 6px;
+  border: none;
+  margin-bottom: 5px;
+}
+
+.sliderContainer {
+  width: 100%;
+  display: flex;
+  transition: 0.3s ease-in-out;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  overscroll-behavior: initial;
+}
+
+.sliderContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.cardcontainer {
+  margin-left: 10px;
+  margin-right: 4px;
+  border-radius: 20px;
+  width: 225px;
+  height: 330px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.cardcontainer-inside {
+  border-radius: 20px;
+  width: 225px;
+  height: 310px;
+  position: absolute;
+  opacity: 0;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+  flex-direction: column;
+  transition: 0.5s ease-in-out;
+}
+
+.cardcontainer-inside > h2 {
+  font-size: 20px;
+  text-align: center;
+  color: #ececec;
+}
+
+.cardcontainer-inside > h3 {
+  font-size: 20px;
+  text-align: center;
+  color: #ececec;
+}
+
+.card {
+  width: 205px;
+  height: 290px;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.55) 0px 3px 8px;
+  transition: 0.5s ease-in-out;
+}
+.cardcontainer:hover > .card {
+  filter: blur(2px);
+  width: 225px;
+  height: 310px;
+  filter: brightness(50%);
+}
+
+.cardcontainer-inside:hover {
+  opacity: 1;
+}
+
+.detail-button {
+  width: 120px;
+  height: 50px;
+  align-self: center;
+  border-radius: 10px;
+  background-color: #ff6f69;
+  border: none;
+  color: #ececec;
+  font-weight: 600;
+  font-size: 20px;
+  transition: 0.4s ease;
+  cursor: pointer;
+}
+.detail-button:hover {
+  transform: scale(1.1);
+}

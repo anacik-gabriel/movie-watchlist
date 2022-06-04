@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import WatchlistContextProvider from "./contexts/WatchlistContext";
+import Details from "./routes/Details";
+import Homepage from "./routes/Homepage";
+import MyList from "./routes/MyList";
+import Search from "./routes/Search";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WatchlistContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/details/:id" element={<Details />} />
+          <Route path="/mylist" element={<MyList />} />
+          <Route path="search/:query" element={<Search />} />
+        </Routes>
+      </BrowserRouter>
+    </WatchlistContextProvider>
   );
-}
+};
 
 export default App;
