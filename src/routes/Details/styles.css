@@ -1,5 +1,4 @@
 .main-container {
-  height: 80vh;
   width: 60%;
   margin: 50px auto;
   display: flex;
@@ -8,23 +7,19 @@
 }
 
 .media-container {
-  height: 60%;
-  width: 1700px;
+  height: 600px;
   display: flex;
   justify-content: center;
 }
 
-.poster-container {
+img {
   height: 100%;
-  width: 25%;
-}
-
-.poster-container > img {
-  width: 100%;
-  height: 100%;
+  object-fit: cover;
+  width: 430px;
 }
 
 .synopsis-container {
+  margin-top: 10px;
   height: 40%;
   width: 1278px;
   display: flex;
@@ -47,9 +42,9 @@
 }
 
 .synopsis {
-  width: 100%;
   color: #ececec;
   margin-left: 5px;
+  margin-top: 10px;
 }
 
 .list-buttons {
@@ -96,6 +91,6 @@
 }
 
 .video-frame {
+  height: 100%;
   width: 854px;
-  height: 563px;
 }

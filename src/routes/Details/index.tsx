@@ -78,13 +78,12 @@ const Details = () => {
           <div className="movie-title">{movieDetails?.fullTitle}</div>
         </div>
         <div className="media-container">
-          <div className="poster-container">
-            <img alt="" src={movieDetails?.image} />
-          </div>{" "}
+          <img alt="" src={movieDetails?.image} />
+
           <div className="video-frame">
             <iframe
               title="trailer"
-              width="100%"
+              width="854px"
               height="100%"
               src={movieTrailer?.linkEmbed}
               frameBorder="0"
