@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import { imdbMoviesApiResponse } from "../../types/imdbTypes";
 import "./styles.css";
 import { SliderProps } from "./types";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import OwlCarousel from "react-owl-carousel";
@@ -45,6 +44,7 @@ const SliderO = ({ movietype, title }: SliderProps) => {
       slider.current.next(500);
     }
   };
+
   const settings = {
     nav: false,
     items: 13,
@@ -101,6 +101,7 @@ const SliderO = ({ movietype, title }: SliderProps) => {
       },
     },
   };
+
   return (
     <>
       <div className="wrapper">
