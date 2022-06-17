@@ -15,9 +15,70 @@ import "slick-carousel/slick/slick-theme.css";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-const SliderO = ({ movietype, title }: SliderProps) => {
+import MyLoader from "../CardLoader";
+import OnImagesLoaded from "react-on-images-loaded";
+
+const settings = {
+  nav: false,
+  items: 13,
+  loop: false,
+  margin: 10,
+  dots: false,
+  lazyLoad: true,
+  slideBy: "page",
+  stagePadding: 10,
+  rewind: false,
+  responsive: {
+    3200: {
+      items: 13,
+    },
+    3000: {
+      items: 12,
+    },
+    2700: {
+      items: 11,
+    },
+    2500: {
+      items: 10,
+    },
+    2200: {
+      items: 9,
+    },
+    2000: {
+      items: 8,
+    },
+    1800: {
+      items: 7,
+    },
+
+    1650: {
+      items: 6,
+      margin: 0,
+    },
+    1500: {
+      items: 6,
+    },
+
+    1250: {
+      items: 5,
+    },
+    1050: {
+      items: 4,
+    },
+    800: {
+      items: 3,
+      margin: 0,
+    },
+    0: {
+      items: 2,
+    },
+  },
+};
+
+const Slider = ({ movietype, title }: SliderProps) => {
   const [movies, setMovies] = useState<imdbMoviesApiResponse>();
   const slider = useRef<OwlCarousel>(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getMovies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,64 +105,7 @@ const SliderO = ({ movietype, title }: SliderProps) => {
       slider.current.next(500);
     }
   };
-
-  const settings = {
-    nav: false,
-    items: 13,
-    loop: true,
-    margin: 10,
-    dots: false,
-    lazyLoad: true,
-    slideBy: "page",
-    stagePadding: 10,
-    rewind: false,
-    responsive: {
-      3200: {
-        items: 13,
-      },
-      3000: {
-        items: 12,
-      },
-      2700: {
-        items: 11,
-      },
-      2500: {
-        items: 10,
-      },
-      2200: {
-        items: 9,
-      },
-      2000: {
-        items: 8,
-      },
-      1800: {
-        items: 7,
-      },
-
-      1650: {
-        items: 6,
-        margin: 0,
-      },
-      1500: {
-        items: 6,
-      },
-
-      1250: {
-        items: 5,
-      },
-      1050: {
-        items: 4,
-      },
-      800: {
-        items: 3,
-        margin: 0,
-      },
-      0: {
-        items: 2,
-      },
-    },
-  };
-
+  const handleLoading = () => setLoading(false);
   return (
     <>
       <div className="wrapper">
@@ -128,32 +132,37 @@ const SliderO = ({ movietype, title }: SliderProps) => {
             </button>
           </div>
         </div>
-
-        <OwlCarousel ref={slider} className="owl-theme" {...settings}>
-          {movies?.data.items.map((movie) => {
-            return (
-              <div className="cardcontainer" key={movie.id}>
-                <div className="cardcontainer-inside">
-                  <h2>{movie.fullTitle}</h2>
-                  <Link to={`/details/${movie.id}`}>
-                    <button className="detail-button">
-                      <FontAwesomeIcon icon={faFileVideo} /> DETAILS{" "}
-                    </button>
-                  </Link>
-                  <h3>{movie.year}</h3>
-                </div>
-                <img
-                  alt="Nothing"
-                  className="card owl-lazy"
-                  data-src={movie.image}
-                />
-              </div>
-            );
-          })}
-        </OwlCarousel>
+        <OnImagesLoaded onLoaded={() => handleLoading()}>
+          <OwlCarousel ref={slider} className="owl-theme" {...settings}>
+            {loading ? (
+              <MyLoader />
+            ) : (
+              movies?.data.items.map((movie) => {
+                return (
+                  <div className="cardcontainer" key={movie.id}>
+                    <div className="cardcontainer-inside">
+                      <h2>{movie.fullTitle}</h2>
+                      <Link to={`/details/${movie.id}`}>
+                        <button className="detail-button">
+                          <FontAwesomeIcon icon={faFileVideo} /> DETAILS{" "}
+                        </button>
+                      </Link>
+                      <h3>{movie.year}</h3>
+                    </div>
+                    <img
+                      alt="Nothing"
+                      className="card owl-lazy"
+                      data-src={movie.image}
+                    />
+                  </div>
+                );
+              })
+            )}
+          </OwlCarousel>
+        </OnImagesLoaded>
       </div>
     </>
   );
 };
 
-export default SliderO;
+export default Slider;

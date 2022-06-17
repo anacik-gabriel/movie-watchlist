@@ -6,10 +6,12 @@ import { Link, useParams } from "react-router-dom";
 import NavBar from "../../Components/NavBar";
 import { SearchQueries } from "./types";
 import "./styles.css";
-
+import { SyncLoader } from "react-spinners";
+import OnImagesLoaded from "react-on-images-loaded";
 const Search = () => {
   const params = useParams();
   const [queries, setQueries] = useState<SearchQueries>();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getSearchQueries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,9 +25,12 @@ const Search = () => {
       setQueries(response);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleLoading = () => setLoading(false);
   const mapQueries = () => {
     const gallery = queries?.data.description.map((query) => {
       return (
@@ -55,10 +60,19 @@ const Search = () => {
 
   return (
     <>
-      <NavBar />{" "}
+      <NavBar />
+
       <div className="gallery">
         <h1>Search results for: {params.query}</h1>
-        <div className="search-container">{mapQueries()}</div>
+        <OnImagesLoaded onLoaded={() => handleLoading}>
+          {loading ? (
+            <div className="loader">
+              <SyncLoader size={50} color="orange" />
+            </div>
+          ) : (
+            <div className="search-container">{mapQueries()}</div>
+          )}
+        </OnImagesLoaded>
       </div>
     </>
   );

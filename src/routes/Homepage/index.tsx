@@ -1,6 +1,6 @@
 import Featured from "../../Components/Featured";
 import NavBar from "../../Components/NavBar";
-import SliderO from "../../Components/Slider";
+import Slider from "../../Components/Slider";
 
 const Homepage = () => {
   return (
@@ -9,7 +9,10 @@ const Homepage = () => {
 
       <Featured />
 
-      <SliderO movietype="Top250Movies" title="TOP MOVIES" />
+      <Slider movietype="Top250Movies" title="TOP MOVIES" />
+      <Slider movietype="Top250TVs" title="TOP TVs" />
+      <Slider movietype="ComingSoon" title="COMING SOON" />
+      <Slider movietype="InTheaters" title="IN THEATERS" />
     </>
   );
 };

@@ -148,6 +148,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 40px;
 }
 
 .owl-carousel .owl-item .owl-lazy {
