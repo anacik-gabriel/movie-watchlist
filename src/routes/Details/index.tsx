@@ -5,32 +5,42 @@ import NavBar from "../../Components/NavBar";
 import "./styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { API_KEY, IMDB_API } from "../../consts";
 import { imdbMovie, imdbMovieApiResponse } from "../../types/imdbTypes";
 import { useWatchlistContext } from "../../contexts/WatchlistContext";
+import { SyncLoader } from "react-spinners";
 
 const Details = () => {
   const params = useParams();
   const [movieDetails, setMovieDetails] = useState<imdbMovie>();
   const [movieTrailer, setMovieTrailer] = useState<imdbMovie>();
+  const { watchlist, setWatchlist } = useWatchlistContext();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   useEffect(() => {
     getDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const { watchlist, setWatchlist } = useWatchlistContext();
 
   const getDetails = async () => {
+    const API_KEY = process.env.REACT_APP_IMDB_API_KEY;
+
     try {
       const movieData: imdbMovieApiResponse = await axios.get(
-        `${IMDB_API}Title/${API_KEY}/${params.id}`
+        `https://imdb-api.com/en/API/Title/${API_KEY}/${params.id}`
       );
       const movieTrailer: imdbMovieApiResponse = await axios.get(
-        `${IMDB_API}Trailer/${API_KEY}/${params.id}`
+        `https://imdb-api.com/en/API/Trailer/${API_KEY}/${params.id}`
       );
       setMovieDetails(movieData.data);
       setMovieTrailer(movieTrailer.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      if (movieTrailer?.linkEmbed === null) {
+        console.log(movieTrailer?.linkEmbed);
+        setVideoLoaded(true);
+        console.log(movieTrailer);
+      }
     }
   };
 
@@ -72,16 +82,33 @@ const Details = () => {
   return (
     <>
       <NavBar />
-
-      <div className="main-container">
+      {videoLoaded && imageLoaded ? (
+        ""
+      ) : (
+        <div className="loader-container">
+          <SyncLoader size={50} color={"orange"} />
+        </div>
+      )}
+      <div
+        className={
+          videoLoaded && imageLoaded
+            ? "main-container"
+            : "main-container-transparent"
+        }
+      >
         <div className="title-container">
           <div className="movie-title">{movieDetails?.fullTitle}</div>
         </div>
         <div className="media-container">
-          <img alt="" src={movieDetails?.image} />
+          <img
+            alt=""
+            onLoad={() => setImageLoaded(true)}
+            src={movieDetails?.image}
+          />
 
           <div className="video-frame">
             <iframe
+              onLoad={() => setVideoLoaded(true)}
               title="trailer"
               width="854px"
               height="100%"

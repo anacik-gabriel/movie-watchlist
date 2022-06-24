@@ -2,7 +2,6 @@ import NavBar from "../../Components/NavBar";
 import "./styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-
 import { useWatchlistContext } from "../../contexts/WatchlistContext";
 
 const MyList = () => {

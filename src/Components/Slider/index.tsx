@@ -85,9 +85,11 @@ const Slider = ({ movietype, title }: SliderProps) => {
   }, []);
 
   const getMovies = async () => {
+    const API_KEY = process.env.REACT_APP_IMDB_API_KEY;
+
     try {
       const response: imdbMoviesApiResponse = await axios.get(
-        `https://imdb-api.com/en/API/${movietype}/k_fusoay1f`
+        `https://imdb-api.com/en/API/${movietype}/${API_KEY}`
       );
       setMovies(response);
     } catch (error) {
@@ -105,7 +107,9 @@ const Slider = ({ movietype, title }: SliderProps) => {
       slider.current.next(500);
     }
   };
+
   const handleLoading = () => setLoading(false);
+
   return (
     <>
       <div className="wrapper">

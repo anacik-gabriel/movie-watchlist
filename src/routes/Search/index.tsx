@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import NavBar from "../../Components/NavBar";
 import { SearchQueries } from "./types";
-import "./styles.css";
 import { SyncLoader } from "react-spinners";
-import OnImagesLoaded from "react-on-images-loaded";
+import noImage from "../../assets/noimage.png";
+
 const Search = () => {
   const params = useParams();
   const [queries, setQueries] = useState<SearchQueries>();
@@ -18,6 +18,7 @@ const Search = () => {
   }, [params.query]);
 
   const getSearchQueries = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
         `https://search.imdbot.workers.dev/?q=${params.query}`
@@ -30,7 +31,6 @@ const Search = () => {
     }
   };
 
-  const handleLoading = () => setLoading(false);
   const mapQueries = () => {
     const gallery = queries?.data.description.map((query) => {
       return (
@@ -47,10 +47,7 @@ const Search = () => {
           <img
             alt="Nothing"
             className="card"
-            src={
-              query["#IMG_POSTER"] ??
-              "https://www.rosemacsales.com/assets/images/no_image.png"
-            }
+            src={query["#IMG_POSTER"] ?? noImage}
           />
         </div>
       );
@@ -63,16 +60,29 @@ const Search = () => {
       <NavBar />
 
       <div className="gallery">
-        <h1>Search results for: {params.query}</h1>
-        <OnImagesLoaded onLoaded={() => handleLoading}>
-          {loading ? (
-            <div className="loader">
-              <SyncLoader size={50} color="orange" />
+        {loading ? (
+          <>
+            <div className="gallery">
+              <h1>Searching...</h1>
+              <div className="loader">
+                <SyncLoader size={50} color="orange" />
+              </div>
             </div>
-          ) : (
-            <div className="search-container">{mapQueries()}</div>
-          )}
-        </OnImagesLoaded>
+          </>
+        ) : (
+          <>
+            {queries?.data.description[0] === undefined ? (
+              <div className="gallery">
+                <h1>Sorry, no results for: {params.query}.</h1>
+              </div>
+            ) : (
+              <div className="gallery">
+                <h1>Search results for: {params.query}</h1>
+                <div className="search-container">{mapQueries()}</div>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </>
   );
