@@ -8,6 +8,7 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { imdbMovie, imdbMovieApiResponse } from "../../types/imdbTypes";
 import { useWatchlistContext } from "../../contexts/WatchlistContext";
 import { SyncLoader } from "react-spinners";
+import novideo from "../../assets/no-video.png";
 
 const Details = () => {
   const params = useParams();
@@ -16,6 +17,7 @@ const Details = () => {
   const { watchlist, setWatchlist } = useWatchlistContext();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
+
   useEffect(() => {
     getDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,24 +27,25 @@ const Details = () => {
     const API_KEY = process.env.REACT_APP_IMDB_API_KEY;
 
     try {
-      const movieData: imdbMovieApiResponse = await axios.get(
+      const movie: imdbMovieApiResponse = await axios.get(
         `https://imdb-api.com/en/API/Title/${API_KEY}/${params.id}`
       );
-      const movieTrailer: imdbMovieApiResponse = await axios.get(
+      const trailer: imdbMovieApiResponse = await axios.get(
         `https://imdb-api.com/en/API/Trailer/${API_KEY}/${params.id}`
       );
-      setMovieDetails(movieData.data);
-      setMovieTrailer(movieTrailer.data);
+      setMovieDetails(movie.data);
+      setMovieTrailer(trailer.data);
     } catch (error) {
       console.log(error);
-    } finally {
-      if (movieTrailer?.linkEmbed === null) {
-        console.log(movieTrailer?.linkEmbed);
-        setVideoLoaded(true);
-        console.log(movieTrailer);
-      }
     }
   };
+
+  useEffect(() => {
+    if (movieTrailer?.linkEmbed === null) {
+      console.log(movieTrailer?.linkEmbed);
+      setVideoLoaded(true);
+    }
+  }, [movieTrailer]);
 
   const mapGenres = () =>
     movieDetails?.genres.split(", ").map((value, index) => (
@@ -107,15 +110,19 @@ const Details = () => {
           />
 
           <div className="video-frame">
-            <iframe
-              onLoad={() => setVideoLoaded(true)}
-              title="trailer"
-              width="854px"
-              height="100%"
-              src={movieTrailer?.linkEmbed}
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
+            {movieTrailer?.linkEmbed === null ? (
+              <img alt="" src={novideo} />
+            ) : (
+              <iframe
+                onLoad={() => setVideoLoaded(true)}
+                title="trailer"
+                width="854px"
+                height="100%"
+                src={movieTrailer?.linkEmbed}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+            )}
           </div>
         </div>
         <div className="synopsis-container">

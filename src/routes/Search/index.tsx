@@ -7,6 +7,7 @@ import NavBar from "../../Components/NavBar";
 import { SearchQueries } from "./types";
 import { SyncLoader } from "react-spinners";
 import noImage from "../../assets/noimage.png";
+import "./styles.css";
 
 const Search = () => {
   const params = useParams();
@@ -62,11 +63,9 @@ const Search = () => {
       <div className="gallery">
         {loading ? (
           <>
-            <div className="gallery">
-              <h1>Searching...</h1>
-              <div className="loader">
-                <SyncLoader size={50} color="orange" />
-              </div>
+            <h1>Searching...</h1>
+            <div className="loader">
+              <SyncLoader size={50} color="orange" />
             </div>
           </>
         ) : (

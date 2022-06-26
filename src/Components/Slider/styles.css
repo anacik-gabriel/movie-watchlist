@@ -134,30 +134,22 @@
   transform: scale(1.1);
 }
 
-.search-container {
-  display: flex;
-}
-
 h1 {
   margin-left: 25px;
   color: #ececec;
   margin-top: 300px;
 }
 
-.gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-}
-
-.owl-carousel .owl-item .owl-lazy {
-  opacity: 0;
-  transition: 0.4s ease !important;
-  position: relative;
-}
-
-.owl-stage {
+.swiper-wrapper {
   padding: 15px 0;
+  height: 360px !important;
+}
+
+.error {
   height: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: #fff;
 }
