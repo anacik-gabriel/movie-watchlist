@@ -121,6 +121,7 @@ const Details = () => {
                 src={movieTrailer?.linkEmbed}
                 frameBorder="0"
                 allowFullScreen
+                scrolling="no"
               ></iframe>
             )}
           </div>
